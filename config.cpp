@@ -30,10 +30,24 @@ class CfgVehicles {
     class Man;
     class CAManBase: Man {
         class ACE_SelfActions {
+            class MIRA_GrenadeSelector {
+                    displayName = "Grenades";
+                    priority = 2;
+                    condition = QUOTE(GVAR(QuickSelect));
+                    statement = "";
+                    class MIRA_Lethal {
+                        displayName = "Lethal";
+                        insertChildren = QUOTE(_this call FUNC(buildLethalGrenadeActions));
+                    };
+                    class MIRA_NonLethal {
+                        displayName = "Non Lethal";
+                        insertChildren = QUOTE(_this call FUNC(buildNonLethalGrenadeActions));
+                    };
+                };
             class ACE_Equipment {
                 class MIRA_GrenadeSelector {
                     displayName = "Grenades";
-                    condition = "";
+                    condition = QUOTE(!GVAR(QuickSelect));
                     statement = "";
                     class MIRA_Lethal {
                         displayName = "Lethal";
@@ -46,5 +60,12 @@ class CfgVehicles {
                 };
             };
         };
+    };
+};
+
+
+class Extended_PreInit_EventHandlers {
+    class ADDON {
+        init = QUOTE(call COMPILE_FILE(XEH_preInit));
     };
 };

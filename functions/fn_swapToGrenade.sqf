@@ -7,7 +7,11 @@ if(_currentThrowable isEqualTo []) then {
 };
 
 if(_grenade isEqualTo (_currentThrowable select 0)) exitWith {
-	LOG("Skipping swap, already have requested grenade selected.");
+	if(GVAR(EquipGrenade))then {
+		[ACE_Player] call ace_advanced_throwing_fnc_prepare
+	}else{
+		LOG("Skipping swap, already have requested grenade selected.");
+	};
 };
 
 _uniformGrenades =  uniformItems  _unit select {_x in ACE_weaponselect_GrenadesAll && {_x != _grenade}};
@@ -25,3 +29,7 @@ _backpackGrenades = backpackItems _unit select {_x in ACE_weaponselect_GrenadesA
 _currentGrenade = _currentThrowable select 0;
 
 LOG(format["Swapped to Grenades"]);
+
+if(GVAR(EquipGrenade)) then {
+	[ACE_Player] call ace_advanced_throwing_fnc_prepare;
+};
